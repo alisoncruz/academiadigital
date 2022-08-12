@@ -1,6 +1,7 @@
 package br.com.academiadigital.controller;
 
 import br.com.academiadigital.entity.Aluno;
+import br.com.academiadigital.entity.AvaliacaoFisica;
 import br.com.academiadigital.entity.form.AlunoForm;
 import br.com.academiadigital.service.IAlunoService;
 import br.com.academiadigital.service.impl.AlunoServiceImpl;
@@ -23,5 +24,10 @@ public class AlunoController {
     @PostMapping
     public Aluno create(@RequestBody AlunoForm form) {
         return service.create(form);
+    }
+
+    @GetMapping("/avaliacoes/{id}")
+    public List<AvaliacaoFisica> getAllAvaliacaoById(@PathVariable Long id){
+        return service.getAllAvaliacao(id);
     }
 }

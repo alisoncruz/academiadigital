@@ -1,6 +1,7 @@
 package br.com.academiadigital.service;
 
 import br.com.academiadigital.entity.Aluno;
+import br.com.academiadigital.entity.AvaliacaoFisica;
 import br.com.academiadigital.entity.form.AlunoForm;
 import br.com.academiadigital.entity.form.AlunoUpdateForm;
 import org.springframework.stereotype.Service;
@@ -17,4 +18,6 @@ public interface IAlunoService {
     Aluno update(Long id, AlunoUpdateForm form);
 
     void delete(Long id);
+
+    List<AvaliacaoFisica> getAllAvaliacao(Long id);
 }
