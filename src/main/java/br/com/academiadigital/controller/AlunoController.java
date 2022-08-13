@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -18,8 +19,8 @@ public class AlunoController {
     private IAlunoService service;
 
     @GetMapping
-    public List<Aluno> getAll() {
-        return service.getAll();
+    public List<Aluno> getAll(@RequestParam(value = "dataNascimento",required = false) String dataNascimento) {
+        return service.getAll(dataNascimento);
     }
 
     @PostMapping
