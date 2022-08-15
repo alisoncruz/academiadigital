@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MatriculaView {
+    private Long id;
     private String nomeAluno;
     private LocalDateTime data;
 }
