@@ -4,20 +4,22 @@ import br.com.academiadigital.entity.Aluno;
 import br.com.academiadigital.entity.AvaliacaoFisica;
 import br.com.academiadigital.entity.form.AlunoForm;
 import br.com.academiadigital.entity.form.AlunoUpdateForm;
+import br.com.academiadigital.entity.view.AlunoView;
+import br.com.academiadigital.entity.view.AvaliacaoFisicaView;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 public interface IAlunoService {
-    Aluno create(AlunoForm form);
+    AlunoView create(AlunoForm form);
 
-    Aluno get(Long id);
+    AlunoView get(Long id);
 
-    List<Aluno> getAll(String dataNascimento);
+    List<AlunoView> getAll(String dataNascimento);
 
-    Aluno update(Long id, AlunoUpdateForm form);
+    AlunoView update(Long id, AlunoUpdateForm form);
 
     void delete(Long id);
 
-    List<AvaliacaoFisica> getAllAvaliacao(Long id);
+    List<AvaliacaoFisicaView> getAllAvaliacao(Long id);
 }

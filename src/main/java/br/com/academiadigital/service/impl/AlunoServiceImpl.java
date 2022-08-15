@@ -1,16 +1,16 @@
 package br.com.academiadigital.service.impl;
 
 import br.com.academiadigital.entity.Aluno;
-import br.com.academiadigital.entity.AvaliacaoFisica;
 import br.com.academiadigital.entity.form.AlunoForm;
 import br.com.academiadigital.entity.form.AlunoUpdateForm;
+import br.com.academiadigital.entity.view.AlunoView;
+import br.com.academiadigital.entity.view.AvaliacaoFisicaView;
 import br.com.academiadigital.infra.utils.JavaTimeUtils;
 import br.com.academiadigital.repository.AlunoRepository;
 import br.com.academiadigital.service.IAlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.websocket.server.PathParam;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,43 +21,49 @@ public class AlunoServiceImpl implements IAlunoService {
     AlunoRepository repository;
 
     @Override
-    public Aluno create(AlunoForm form) {
+    public AlunoView create(AlunoForm form) {
         Aluno entity = new Aluno();
         entity.setNome(form.getNome());
         entity.setCpf(form.getCpf());
         entity.setBairro(form.getBairro());
         entity.setDataNascimento(form.getDataNascimento());
         entity = repository.save(entity);
-        return entity;
+        return new AlunoView(entity.getId(), entity.getNome(), entity.getDataNascimento());
     }
 
     @Override
-    public Aluno get(Long id) {
-        return null;
+    public AlunoView get(Long id) {
+        Aluno entity = repository.findById(id).get();
+        return new AlunoView(entity.getId(), entity.getNome(), entity.getDataNascimento());
     }
 
     @Override
-    public List<Aluno> getAll(String dataNascimento) {
+    public List<AlunoView> getAll(String dataNascimento) {
         if (dataNascimento == null) {
-            return repository.findAll();
+            return AlunoView.getList(repository.findAll());
         }
         LocalDate dataNasc = LocalDate.parse(dataNascimento, JavaTimeUtils.LOCAL_DATE_FORMATTER);
-        return repository.findByDataNascimento(dataNasc);
+        return AlunoView.getList(repository.findByDataNascimento(dataNasc));
     }
 
     @Override
-    public Aluno update(Long id, AlunoUpdateForm form) {
-        return null;
+    public AlunoView update(Long id, AlunoUpdateForm form) {
+        Aluno entity = repository.findById(id).get();
+        entity.setNome(form.getNome());
+        entity.setBairro(form.getBairro());
+        entity.setDataNascimento(form.getDataNascimento());
+        entity = repository.save(entity);
+        return new AlunoView(entity.getId(), entity.getNome(), entity.getDataNascimento());
     }
 
     @Override
     public void delete(Long id) {
-
+        repository.deleteById(id);
     }
 
     @Override
-    public List<AvaliacaoFisica> getAllAvaliacao(Long id) {
+    public List<AvaliacaoFisicaView> getAllAvaliacao(Long id) {
         Aluno aluno = repository.findById(id).get();
-        return aluno.getAvaliacoes();
+        return AvaliacaoFisicaView.getList(aluno.getAvaliacoes());
     }
 }
